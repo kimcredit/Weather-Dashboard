@@ -37,6 +37,48 @@ $("#city-submit").on("click", function(event) {
         //the user input variable is used in the url construction 
         //the 5 day weather forcast is targeted 
 
+//variables to hold the api key and city name
+var APIkey = "f3a5e880c02f964b81ed551a1ebed72e";
+    //placeholder stagnant city name while testing
+var cityName = "annapolis";
+//make query URL using the city variable as a search feature
+var queryURL = "https://api.openweathermap.org/data/2.5/find?q=" + 
+cityName + "&units=imperial&appid=" +
+APIkey;
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+    })
+    // We store all of the retrieved data inside of an object called "response"
+    .then(function(response) {
+        //gathering information from today's API
+        console.log(response);
+        console.log(response.list[0].name);
+        console.log(response.list[0].weather[0].icon);
+        console.log("Temperature: " + response.list[0].main.temp);
+            //+ "&#8457;" this will be to get degree farenheit in the html
+        console.log("Humidity: " + response.list[0].main.humidity);
+        console.log("Wind Speed: " + response.list[0].wind.speed);
+    
+        //creating new api using lat + long information for current city to find daily future forcast array
+        var uvQuery = "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+        response.list[0].coord.lat +
+        "&lon=" + 
+        response.list[0].coord.lon +
+        "&exclude=current,minutely,hourly&appid=" +
+        APIkey;
+        
+        $.ajax({
+            url: uvQuery,
+            method: "GET"
+          })
+            //use that new api first to find the UV index of the first day
+            .then(function(response) {
+                console.log(response);
+                console.log("UV Index: " + response.daily[0].uvi);
+            });
+    });
 //step:03
         //the buttons are rendered:
             //a for loop is created in which each for each city    
@@ -64,7 +106,6 @@ function renderButtons() {
         $(".saved-cities").prepend(cityButton);
     }
 }
-
 //step:04 
     //make the data from the user's most recent selected city populates the two areas on the right of the site
     
