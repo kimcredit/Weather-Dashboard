@@ -6,6 +6,25 @@
             //the new city is added to the array of cities that will be rendered into buttons
             //the button display has a limit of 7 
 
+//variable holding all city inputs
+var cities = ["Annapolis", "baltimore", "portland", "seattle"];
+
+//event listener for submit button 
+$("#city-submit").on("click", function(event) {
+    event.preventDefault();
+    //made a variable for the user input and a variable for the city value
+    var userInput = $("#user-input");
+    var city = userInput.val().trim();
+    //if the user inputs nothing, nothing is added to the array
+    if (city === "") {
+        return;
+    }
+    //if the user inputs a city it is added to the array
+    cities.push(city);
+    //the input field is cleared
+    userInput.val("");
+});
+
 //step:02
     //make the query url so that...
         //the key is given a variable for easy legibility
@@ -52,3 +71,5 @@
     //local storage
         //the city array to local storage and pull it to populate the page
         //the current clicked city button will be saved to local storage so that its info populates the dashboard when opened
+
+ 
