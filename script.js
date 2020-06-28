@@ -7,7 +7,7 @@
             //the button display has a limit of 7 
 
 //variable holding all city inputs
-var cities = ["Annapolis", "baltimore", "portland", "seattle"];
+var cities = ["Annapolis", "baltimore"];
 
 //event listener for submit button 
 $("#city-submit").on("click", function(event) {
@@ -21,8 +21,14 @@ $("#city-submit").on("click", function(event) {
     }
     //if the user inputs a city it is added to the array
     cities.push(city);
+    //limit the array to 7 cities
+    if (cities.length > 7) {
+        cities.shift();
+    }
     //the input field is cleared
     userInput.val("");
+    //run the renderButtons function
+    renderButtons();
 });
 
 //step:02
@@ -39,6 +45,25 @@ $("#city-submit").on("click", function(event) {
                 //the button is assigned the class city-button 
                 //the button is prepended to the 'saved-cities' div
                     //will prepending make this show up first if it is the last item in the array? or when i push will i need to add it to the beginning of the array
+
+//function for displaying the city buttons
+function renderButtons() {
+    //clear current buttons
+    $(".saved-cities").empty();
+    //for each city in the array
+    for (var i = 0; i < cities.length; i++) {
+        //create a button
+        var cityButton = $("<button>");
+        //give it the city-button class 
+        cityButton.addClass("city-button");
+        //give it the data-name of the current city
+        cityButton.attr("data-name", cities[i]);
+        //give it the inner text of the current city
+        cityButton.text(cities[i]);
+        //add it to the top of the city-button div
+        $(".saved-cities").prepend(cityButton);
+    }
+}
 
 //step:04 
     //make the data from the user's most recent selected city populates the two areas on the right of the site
