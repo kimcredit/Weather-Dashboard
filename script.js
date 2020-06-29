@@ -6,6 +6,8 @@
             //the new city is added to the array of cities that will be rendered into buttons
             //the button display has a limit of 7 
 
+
+
 //variable holding all city inputs
 var cities = ["Annapolis", "baltimore"];
 
@@ -68,7 +70,7 @@ $.ajax({
         response.list[0].coord.lat +
         "&lon=" + 
         response.list[0].coord.lon +
-        "&exclude=current,minutely,hourly&appid=" +
+        "&exclude=current,minutely,hourly&units=imperial&appid=" +
         APIkey;
         
         $.ajax({
@@ -79,6 +81,50 @@ $.ajax({
             .then(function(response) {
                 //use that new api first to find the UV index of the first day
                 $("#today-uv").text("UV Index: " + response.daily[0].uvi);
+                //clear current day-display
+                $("#day-display").empty();
+                
+                //for 5 days
+                for (var i = 0; i < 5; i++) {
+                    //create a div and assign it the class future-forcast
+                    var futureForcast = $("<div>");
+                    futureForcast.addClass("future-forcast");
+                    
+                    //create a header with the class date and give it the value of the date for the next 5 days
+                    var date = $("<h3>");
+                    date.addClass("date");
+                    var today = moment();
+                    //since i starts at zero, add 1 to start at adding 1
+                    var tomorrow = today.add((i+1), 'days');
+                    date.text(moment(tomorrow).format("M/D/YYYY"));
+                    
+                    //create a link for the weather icon 
+                    var futureIconCode = response.daily[i+1].weather[0].icon;
+                    var futureIconURL = "http://openweathermap.org/img/w/" + futureIconCode + ".png";
+                    //create a new image tag with the class weather-icon
+                    var forcastIcon = $("<img>");
+                    forcastIcon.addClass("weather-icon");
+                    //give it the src of the link we created an add an alternate
+                    forcastIcon.attr("src", futureIconURL);
+                    forcastIcon.attr("alt", "weather icon");
+
+                    //create a p tag for the temp and give it the class temp
+                    var temp = $("<p>");
+                    temp.addClass("temp");
+                    //make temp's inner html the temp for that day
+                    temp.html("Temp: " + response.daily[i+1].temp.day + " &#8457;");
+
+                    //create a p tag for humidity and give it the class humidity
+                    var humidity = $("<p>");
+                    humidity.addClass("humidity");
+                    //make its text the humidity for that day
+                    humidity.text("Humidity: " + response.daily[i+1].humidity);
+
+                    //append the date, forcast icon, temp, and humidity to the future forcast div we created
+                    futureForcast.append(date, forcastIcon, temp, humidity);
+                    //append the forcast div to the day-display holding div
+                    $("#day-display").append(futureForcast);
+                }
             });
     });
 //step:03
