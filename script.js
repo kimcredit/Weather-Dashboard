@@ -50,16 +50,18 @@ $.ajax({
     url: queryURL,
     method: "GET"
     })
-    // We store all of the retrieved data inside of an object called "response"
+
     .then(function(response) {
-        //gathering information from today's API
-        console.log(response);
-        console.log(response.list[0].name);
-        console.log(response.list[0].weather[0].icon);
-        console.log("Temperature: " + response.list[0].main.temp);
-            //+ "&#8457;" this will be to get degree farenheit in the html
-        console.log("Humidity: " + response.list[0].main.humidity);
-        console.log("Wind Speed: " + response.list[0].wind.speed);
+        //Populating today's weather forcast
+        //making the icon into an image
+        var iconCode = response.list[0].weather[0].icon;
+        var iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png";
+        //making the title using the name from the current weather API, the current date from moment.js, and the weather icon we created
+        $("#city-name").html(response.list[0].name + moment().format(" (M  / D / YYYY) ") + "<img id='today-icon' src=" + iconURL + " alt='Weather icon'>");
+        //populating the rest of the information excluding UV, which isn't present in this API
+        $("#today-temp").html("Temperature: " + response.list[0].main.temp + " &#8457;");
+        $("#today-humid").text("Humidity: " + response.list[0].main.humidity + " %");
+        $("#today-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
     
         //creating new api using lat + long information for current city to find daily future forcast array
         var uvQuery = "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -73,10 +75,10 @@ $.ajax({
             url: uvQuery,
             method: "GET"
           })
-            //use that new api first to find the UV index of the first day
+            
             .then(function(response) {
-                console.log(response);
-                console.log("UV Index: " + response.daily[0].uvi);
+                //use that new api first to find the UV index of the first day
+                $("#today-uv").text("UV Index: " + response.daily[0].uvi);
             });
     });
 //step:03
