@@ -31,7 +31,7 @@ h3 {
 aside {
     float: left;
     background-color: #f3f4f5;
-    height: 600px;
+    height: 615px;
     padding: 20px;
     border-radius: 6px;
     margin: 0 1% 0 1%;
@@ -106,6 +106,36 @@ footer {
 
 .temp-info {
     padding: 10px;
+}
+
+#uv-info {
+    display: flex;
+    align-items: center;
+}
+
+#today-uv {
+    margin-left: 10px;
+}
+
+.low-uv {
+    background-color: #61bf7b;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.mid-uv {
+    background-color: #e8c65d;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.high-uv {
+    background-color: #e85d5d;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 6px;
 }
 
 #five-day-display {

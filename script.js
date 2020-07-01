@@ -1,8 +1,12 @@
 //wait until everything is loaded to show items
 $(document).ready(function () {
-
-    //variable holding all city inputs
-    var cities = ["Baltimore"];
+    
+    //get cities array from local storage
+    var cities = JSON.parse(localStorage.getItem("cities"));
+    //if nothing is in local storage, default to 'Baltimore'
+    cities = cities ? cities : ["Baltimore"];
+    //display buttons for any existing items in the array
+    renderButtons();
 
     //event listener for submit button 
     $("#city-submit").on("click", function(event) {
@@ -22,18 +26,22 @@ $(document).ready(function () {
         }
         //the input field is cleared
         userInput.val("");
+        //add cities array to local storage
+        localStorage.setItem("cities", JSON.stringify(cities));
         //run the renderButtons function
         renderButtons();
     });
 
     //getting the city name from the button's value
-    var cityName = $(this).attr("data-name");
-    cityName = cityName ? cityName : "Baltimore";
+    var defaultCity = "Baltimore";
     displayCityInfo();
 
     function displayCityInfo() {
-        //variables to hold the api key and city name
+        //variable to hold the api key
         var APIkey = "f3a5e880c02f964b81ed551a1ebed72e";
+        //variable to hold city name from city clicked + setting default to baltimore
+        var cityName = $(this).attr("data-name");
+        cityName = cityName ? cityName : defaultCity;
         //make query URL using the city variable as a search feature
         var queryURL = "https://api.openweathermap.org/data/2.5/find?q=" + 
             cityName + "&units=imperial&appid=" +
@@ -72,7 +80,17 @@ $(document).ready(function () {
                     
                     .then(function(response) {
                         //use that new api first to find the UV index of the first day
-                        $("#today-uv").text("UV Index: " + response.daily[0].uvi);
+                        $("#today-uv").text(response.daily[0].uvi);
+
+                        //add styling to show uv index warnings
+                        if (response.daily[0].uvi < 3) {
+                            $("#today-uv").addClass("low-uv");
+                        }else if (response.daily[0].uvi > 7) {
+                            $("#today-uv").addClass("high-uv");
+                        }else {
+                            $("#today-uv").addClass("mid-uv");
+                        }
+
                         //clear current day-display
                         $("#day-display").empty();
                         
@@ -120,7 +138,6 @@ $(document).ready(function () {
                     });
             });
     }
-
     //function for displaying the city buttons
     function renderButtons() {
         //clear current buttons
@@ -141,18 +158,8 @@ $(document).ready(function () {
             $(".saved-cities").prepend(cityButton);
         }
     }
-    
+    //click event for city buttons
     $(document).on("click", ".city-button", displayCityInfo);
-    
-
-
-
 });
-
-//step:06
-    //make it so the website starts with an initial city being shown
-
-//step:07 
-    //add color indicators to UV results
 
  
