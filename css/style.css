@@ -4,6 +4,7 @@
     margin: 0;
 }
 
+/*Page Elements*/
 body { 
     font-family: 'Roboto', 'helvetica', Arial, sans-serif;
 }
@@ -54,6 +55,7 @@ footer {
     background-color: rgba(255, 255, 255, 0.75);
 }
 
+/*Aside Elements*/
 #user-input {
     height: 40px;
     width: 65%;
@@ -101,6 +103,7 @@ footer {
     background-color: rgba(255, 255, 255, 0.50);
 }
 
+/*Main Today Section Elements*/
 #today-display {
     padding: 20px;
     border-style: solid;
@@ -122,6 +125,7 @@ footer {
     margin-left: 10px;
 }
 
+/*UV Indicative Classes*/
 .low-uv {
     background-color: #61bf7b;
     color: white;
@@ -143,6 +147,7 @@ footer {
     border-radius: 6px;
 }
 
+/*Main 5 Day Forcast Elements*/
 #five-day-display {
     margin-top: 20px;
 }
@@ -161,6 +166,7 @@ footer {
     border-radius: 6px;
 }
 
+/*Footer Elements*/
 #footer-text {
     display: flex;
     justify-content: center;

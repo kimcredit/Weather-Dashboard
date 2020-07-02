@@ -21,15 +21,19 @@ $(document).ready(function () {
         //if the user inputs a city it is added to the array
         cities.push(city);
         //limit the array to 7 cities
-        if (cities.length > 7) {
+        if (cities.length > 8) {
             cities.shift();
         }
         //the input field is cleared
         userInput.val("");
         //add cities array to local storage
         localStorage.setItem("cities", JSON.stringify(cities));
+        //set the city searched as the selected city in local storage
+        localStorage.setItem("selected-city", city);
         //run the renderButtons function
         renderButtons();
+        //run the display city info function
+        displayCityInfo();
     });
 
     //Set a default city and run the display city info function upon opening
@@ -40,7 +44,7 @@ $(document).ready(function () {
         //variable to hold the api key
         var APIkey = "f3a5e880c02f964b81ed551a1ebed72e";
         //get the selected city name from local storage  
-        var selectedCity = JSON.parse(localStorage.getItem("selected-city"));
+        var selectedCity = localStorage.getItem("selected-city");
         //if local storage is empty, display the default city
         selectedCity = selectedCity ? selectedCity : defaultCity;
         //make query URL using the selected city variable as a search feature
@@ -163,7 +167,7 @@ $(document).ready(function () {
     //click event for city buttons
     $(document).on("click", ".city-button", function() {
         //add selected city to local storage
-        localStorage.setItem("selected-city", JSON.stringify($(this).attr("data-name")));
+        localStorage.setItem("selected-city", ($(this).attr("data-name")));
         //run the display info function
         displayCityInfo();
     });
