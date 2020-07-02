@@ -61,7 +61,7 @@ $(document).ready(function () {
                 //Populating today's weather forcast
                 //making the icon into an image
                 var iconCode = response.list[0].weather[0].icon;
-                var iconURL = "http://openweathermap.org/img/w/" + iconCode + ".png";
+                var iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
                 //making the title using the name from the current weather API, the current date from moment.js, and the weather icon we created
                 $("#city-name").html(response.list[0].name + moment().format(" (M  / D / YYYY) ") + "<img id='today-icon' src=" + iconURL + " alt='Weather icon'>");
                 //populating the rest of the information excluding UV, which isn't present in this API
