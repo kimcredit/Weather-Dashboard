@@ -51,7 +51,6 @@ $(document).ready(function () {
         var queryURL = "https://api.openweathermap.org/data/2.5/find?q=" + 
             selectedCity + "&units=imperial&appid=" +
             APIkey;
-            console.log(selectedCity + "in function");
 
         $.ajax({
             url: queryURL,
@@ -59,7 +58,6 @@ $(document).ready(function () {
             })
 
             .then(function(response) {
-                console.log(response);
                 //Populating today's weather forcast
                 //making the icon into an image
                 var iconCode = response.list[0].weather[0].icon;
@@ -122,7 +120,7 @@ $(document).ready(function () {
                             
                             //create a link for the weather icon 
                             var futureIconCode = response.daily[i+1].weather[0].icon;
-                            var futureIconURL = "http://openweathermap.org/img/w/" + futureIconCode + ".png";
+                            var futureIconURL = "https://openweathermap.org/img/w/" + futureIconCode + ".png";
                             //create a new image tag with the class weather-icon
                             var forcastIcon = $("<img>");
                             forcastIcon.addClass("weather-icon");
