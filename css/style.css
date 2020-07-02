@@ -50,6 +50,10 @@ footer {
     bottom: 0;
 }
 
+footer {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
 #user-input {
     height: 40px;
     width: 65%;
@@ -90,6 +94,7 @@ footer {
     color: #5a5a5a;
     text-align: left;
     padding-left: 20px;
+    text-transform: capitalize;
 }
 
 .city-button:hover {

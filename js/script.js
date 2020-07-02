@@ -32,20 +32,22 @@ $(document).ready(function () {
         renderButtons();
     });
 
-    //getting the city name from the button's value
-    var defaultCity = "Baltimore";
+    //Set a default city and run the display city info function upon opening
+    var defaultCity = "Baltimore"
     displayCityInfo();
 
     function displayCityInfo() {
         //variable to hold the api key
         var APIkey = "f3a5e880c02f964b81ed551a1ebed72e";
-        //variable to hold city name from city clicked + setting default to baltimore
-        var cityName = $(this).attr("data-name");
-        cityName = cityName ? cityName : defaultCity;
-        //make query URL using the city variable as a search feature
+        //get the selected city name from local storage  
+        var selectedCity = JSON.parse(localStorage.getItem("selected-city"));
+        //if local storage is empty, display the default city
+        selectedCity = selectedCity ? selectedCity : defaultCity;
+        //make query URL using the selected city variable as a search feature
         var queryURL = "https://api.openweathermap.org/data/2.5/find?q=" + 
-            cityName + "&units=imperial&appid=" +
+            selectedCity + "&units=imperial&appid=" +
             APIkey;
+            console.log(selectedCity + "in function");
 
         $.ajax({
             url: queryURL,
@@ -159,7 +161,12 @@ $(document).ready(function () {
         }
     }
     //click event for city buttons
-    $(document).on("click", ".city-button", displayCityInfo);
+    $(document).on("click", ".city-button", function() {
+        //add selected city to local storage
+        localStorage.setItem("selected-city", JSON.stringify($(this).attr("data-name")));
+        //run the display info function
+        displayCityInfo();
+    });
 });
 
  
