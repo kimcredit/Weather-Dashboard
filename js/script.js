@@ -90,10 +90,16 @@ $(document).ready(function () {
 
                         //add styling to show uv index warnings
                         if (response.daily[0].uvi < 3) {
+                            $("#today-uv").removeClass("mid-uv");
+                            $("#today-uv").removeClass("high-uv");
                             $("#today-uv").addClass("low-uv");
                         }else if (response.daily[0].uvi > 7) {
+                            $("#today-uv").removeClass("low-uv");
+                            $("#today-uv").removeClass("mid-uv");
                             $("#today-uv").addClass("high-uv");
                         }else {
+                            $("#today-uv").removeClass("low-uv");
+                            $("#today-uv").removeClass("high-uv");
                             $("#today-uv").addClass("mid-uv");
                         }
 
